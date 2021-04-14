@@ -1,4 +1,7 @@
 using BlazorUI.Data;
+using DemoLibrary;
+using DemoLibrary.DataAccess;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +32,9 @@ namespace BlazorUI
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddSingleton<IDataAccess, DemoDataAccess>(); //just for the demo
+            services.AddMediatR(typeof(DemoLibraryMediatREntrypoint).Assembly); //that's gonna load the entire assembly and look for anything to do with MediatR, which is gonna be anything that is a handler, a query or a command
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
